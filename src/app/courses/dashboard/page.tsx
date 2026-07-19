@@ -28,9 +28,9 @@ const COLORS = [
 interface DashboardData {
   success: boolean;
   summary: {
-    totalHouses: number;
-    availableHouses: number;
-    rentedHouses: number;
+    totalCourses: number;
+    beginnerCourses: number;
+    advancedCourses: number;
   };
   categories: {
     name: string;
@@ -38,7 +38,7 @@ interface DashboardData {
   }[];
   monthly: {
     month: string;
-    houses: number;
+    courses: number;
   }[];
 }
 
@@ -52,7 +52,7 @@ export default function DashboardPage() {
         const { data, error } = await authClient.token();
 
         if (error || !data?.token) {
-          console.log("Token error", error);
+          console.log(error);
           return;
         }
 
@@ -81,97 +81,81 @@ export default function DashboardPage() {
     fetchDashboard();
   }, []);
 
-
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center text-lg font-semibold">
         Loading Dashboard...
       </div>
     );
   }
 
-
   if (!dashboard) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center text-lg font-semibold">
         No Dashboard Data Found
       </div>
     );
   }
 
-
   return (
     <section className="min-h-screen bg-gray-50 py-10">
-      <div className="mx-auto max-w-6xl px-5">
-
-        <div className="mb-8">
-          <h1 className="text-3xl font-extrabold text-gray-900">
-            Dashboard
+      <div className="mx-auto max-w-7xl px-5">
+        <div className="mb-10">
+          <h1 className="text-4xl font-extrabold text-gray-900">
+            Course Analytics Dashboard
           </h1>
 
           <p className="mt-2 text-gray-500">
-            House Rental Statistics Overview
+            AI Course Marketplace Statistics Overview
           </p>
         </div>
-
 
         {/* Summary Cards */}
 
         <div className="grid gap-6 md:grid-cols-3">
-
-          <div className="rounded-2xl bg-white p-6 shadow">
-            <p className="text-gray-500">
-              Total Houses
+          <div className="rounded-3xl bg-white p-6 shadow-sm border">
+            <p className="text-gray-500 font-medium">
+              Total Courses
             </p>
 
-            <h2 className="mt-3 text-4xl font-bold text-cyan-600">
-              {dashboard.summary.totalHouses}
+            <h2 className="mt-4 text-5xl font-bold text-cyan-600">
+              {dashboard.summary.totalCourses}
             </h2>
           </div>
 
-
-          <div className="rounded-2xl bg-white p-6 shadow">
-            <p className="text-gray-500">
-              Available
+          <div className="rounded-3xl bg-white p-6 shadow-sm border">
+            <p className="text-gray-500 font-medium">
+              Beginner Courses
             </p>
 
-            <h2 className="mt-3 text-4xl font-bold text-green-600">
-              {dashboard.summary.availableHouses}
+            <h2 className="mt-4 text-5xl font-bold text-green-600">
+              {dashboard.summary.beginnerCourses}
             </h2>
           </div>
 
-
-          <div className="rounded-2xl bg-white p-6 shadow">
-            <p className="text-gray-500">
-              Rented
+          <div className="rounded-3xl bg-white p-6 shadow-sm border">
+            <p className="text-gray-500 font-medium">
+              Advanced Courses
             </p>
 
-            <h2 className="mt-3 text-4xl font-bold text-red-500">
-              {dashboard.summary.rentedHouses}
+            <h2 className="mt-4 text-5xl font-bold text-purple-600">
+              {dashboard.summary.advancedCourses}
             </h2>
           </div>
-
         </div>
-
-
 
         {/* Charts */}
 
         <div className="mt-10 grid gap-8 lg:grid-cols-2">
+          {/* Monthly Chart */}
 
-
-          {/* Bar Chart */}
-
-          <div className="rounded-2xl bg-white p-6 shadow">
-
-            <h2 className="mb-5 text-xl font-bold">
-              Monthly Houses Added
+          <div className="rounded-3xl border bg-white p-6 shadow-sm">
+            <h2 className="mb-6 text-xl font-bold">
+              Monthly Course Statistics
             </h2>
 
-            <ResponsiveContainer width="100%" height={300}>
-
+            <ResponsiveContainer width="100%" height={320}>
               <BarChart data={dashboard.monthly}>
-
                 <XAxis dataKey="month" />
 
                 <YAxis />
@@ -179,64 +163,45 @@ export default function DashboardPage() {
                 <Tooltip />
 
                 <Bar
-                  dataKey="houses"
+                  dataKey="courses"
                   fill="#06B6D4"
-                  radius={[8,8,0,0]}
+                  radius={[8, 8, 0, 0]}
                 />
-
               </BarChart>
-
             </ResponsiveContainer>
-
           </div>
 
+          {/* Category Chart */}
 
-
-          {/* Pie Chart */}
-
-          <div className="rounded-2xl bg-white p-6 shadow">
-
-            <h2 className="mb-5 text-xl font-bold">
-              House Categories
+          <div className="rounded-3xl border bg-white p-6 shadow-sm">
+            <h2 className="mb-6 text-xl font-bold">
+              Category Distribution
             </h2>
 
-
-            <ResponsiveContainer width="100%" height={300}>
-
+            <ResponsiveContainer width="100%" height={320}>
               <PieChart>
-
                 <Pie
                   data={dashboard.categories}
                   dataKey="value"
                   nameKey="name"
-                  outerRadius={100}
+                  outerRadius={110}
                   label
                 >
-
-                  {dashboard.categories.map((item,index)=>(
+                  {dashboard.categories.map((item, index) => (
                     <Cell
                       key={item.name}
                       fill={COLORS[index % COLORS.length]}
                     />
                   ))}
-
                 </Pie>
-
 
                 <Tooltip />
 
                 <Legend />
-
               </PieChart>
-
             </ResponsiveContainer>
-
           </div>
-
-
         </div>
-
-
       </div>
     </section>
   );
