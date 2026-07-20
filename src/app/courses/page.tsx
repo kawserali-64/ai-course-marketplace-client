@@ -79,41 +79,42 @@ export default async function CoursesPage({
   } = await getCourses(params);
 
   return (
-    <section className="min-h-screen bg-gray-50 py-16">
+    <section className="min-h-screen bg-[#050505] py-16">
       <div className="mx-auto w-full max-w-6xl px-4">
 
         {/* Heading */}
         <div className="mb-12 text-center">
-          <span className="text-sm font-bold uppercase tracking-wider text-cyan-600">
+          <span className="text-xs font-bold uppercase tracking-widest text-cyan-500">
             Explore AI Courses
           </span>
 
-          <h1 className="mt-4 text-4xl font-extrabold text-gray-900 md:text-6xl">
+          <h1 className="mt-4 text-4xl font-black text-white md:text-6xl">
             Learn AI Skills From Experts
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-400">
             Browse premium AI courses and improve your skills with
             industry-level instructors.
           </p>
         </div>
+        
         {/* Filters */}
         <CourseFilters />
+        
         {/* Result Count */}
         <div className="mb-8 flex items-center justify-between">
-          <p className="font-medium text-gray-600">
+          <p className="font-medium text-gray-400">
             Total Courses:{" "}
-            <span className="font-bold text-cyan-600">
+            <span className="font-bold text-cyan-400">
               {total}
             </span>
           </p>
         </div>
 
-
         {/* Course Grid */}
         {courses.length === 0 ? (
-          <div className="rounded-3xl border bg-white p-16 text-center shadow-sm">
-            <h2 className="text-3xl font-bold text-gray-800">
+          <div className="rounded-3xl border border-gray-800 bg-[#0a0a0a] p-16 text-center shadow-2xl">
+            <h2 className="text-3xl font-black text-white">
               No Courses Found
             </h2>
 
@@ -131,7 +132,6 @@ export default async function CoursesPage({
             ))}
           </div>
         )}
-
 
         {/* Pagination */}
         <div className="mt-12 flex justify-center">

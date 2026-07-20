@@ -38,7 +38,7 @@ export default function AddCoursePage() {
   });
 
   const inputClass =
-    "w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-800 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100";
+    "w-full bg-[#0a0a0a] border border-gray-900 px-4 py-3 text-white outline-none transition focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50";
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -153,35 +153,39 @@ export default function AddCoursePage() {
   };
 
   return (
-    <section className="min-h-screen bg-gray-50 py-12">
+    <section className="min-h-screen bg-[#050505] py-12">
       <div className="mx-auto max-w-5xl px-4">
-        <div className="rounded-3xl border bg-white p-6 shadow-sm md:p-10">
-          <div className="mb-8">
-            <h1 className="flex items-center gap-2 text-3xl font-extrabold text-gray-900">
-              <HiSparkles className="text-cyan-600" />
-              Add New Course
+        <div className="border border-gray-900 bg-[#0a0a0a] p-10">
+          <div className="mb-10">
+            <h1 className="flex items-center gap-3 text-3xl font-black text-white uppercase tracking-tighter">
+              <HiSparkles className="text-cyan-500" />
+              Add New Module
             </h1>
-            <p className="mt-2 text-gray-500">Create your AI course and publish it.</p>
+            <p className="mt-2 text-gray-500">Configure course architecture</p>
           </div>
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid gap-5 md:grid-cols-2">
-              <input required name="title" placeholder="Course title" className={inputClass} value={form.title} onChange={handleChange} />
-              <input required name="instructor" placeholder="Instructor name" className={inputClass} value={form.instructor} onChange={handleChange} />
+              <input required name="title" placeholder="Course Title" className={inputClass} value={form.title} onChange={handleChange} />
+              <input required name="instructor" placeholder="Instructor Name" className={inputClass} value={form.instructor} onChange={handleChange} />
             </div>
             <input required name="shortDescription" placeholder="Short description" className={inputClass} value={form.shortDescription} onChange={handleChange} />
-            <div>
-              <label className="mb-2 block font-semibold text-gray-700">AI Description Length</label>
-              <select value={descriptionLength} onChange={(e) => setDescriptionLength(e.target.value)} className={inputClass}>
+            
+            <div className="bg-[#050505] border border-gray-900 p-6">
+              <label className="mb-4 block font-bold text-white uppercase tracking-widest text-xs">AI Description Engine</label>
+              <select value={descriptionLength} onChange={(e) => setDescriptionLength(e.target.value)} className={`${inputClass} mb-4`}>
                 <option value="Short">Short (50-70 words)</option>
                 <option value="Medium">Medium (120-150 words)</option>
                 <option value="Long">Long (200-300 words)</option>
               </select>
+              <button type="button" onClick={generateDescription} disabled={aiLoading} className="flex w-full items-center justify-center gap-2 bg-gray-900 py-3 font-bold text-white uppercase tracking-widest hover:bg-cyan-500/20 transition-all border border-gray-800 hover:border-cyan-500/50 disabled:opacity-50">
+                <HiSparkles className="text-cyan-500" />
+                {aiLoading ? "Generating..." : "Generate AI Description"}
+              </button>
             </div>
-            <button type="button" onClick={generateDescription} disabled={aiLoading} className="flex w-full items-center justify-center gap-2 rounded-xl bg-purple-600 py-3 font-bold text-white transition hover:bg-purple-700 disabled:opacity-50">
-              <HiSparkles />
-              {aiLoading ? "Generating AI Description..." : "Generate AI Description"}
-            </button>
-            <textarea required name="description" placeholder="Course description" rows={6} className={inputClass} value={form.description} onChange={handleChange} />
+
+            <textarea required name="description" placeholder="Full course description" rows={6} className={inputClass} value={form.description} onChange={handleChange} />
+            
             <div className="grid gap-5 md:grid-cols-3">
               <select required name="category" className={inputClass} value={form.category} onChange={handleChange}>
                 <option value="">Select Category</option>
@@ -194,17 +198,19 @@ export default function AddCoursePage() {
                 <option value="Intermediate">Intermediate</option>
                 <option value="Advanced">Advanced</option>
               </select>
-              <input required type="number" name="price" placeholder="Price" className={inputClass} value={form.price} onChange={handleChange} />
+              <input required type="number" name="price" placeholder="Price ($)" className={inputClass} value={form.price} onChange={handleChange} />
             </div>
-            <div className="rounded-2xl border-2 border-dashed border-gray-300 p-8 text-center">
+
+            <div className="border border-dashed border-gray-900 p-8 text-center bg-[#0a0a0a]">
               <input id="image" type="file" className="hidden" onChange={handleImage} />
               <label htmlFor="image" className="flex cursor-pointer flex-col items-center gap-3">
-                {preview ? <Image src={preview} width={120} height={120} alt="preview" className="rounded-xl" /> : <HiCloudArrowUp size={45} className="text-gray-400" />}
-                <span className="text-gray-500">Upload Course Cover</span>
+                {preview ? <Image src={preview} width={120} height={120} alt="preview" className="border border-cyan-500" /> : <HiCloudArrowUp size={45} className="text-gray-500" />}
+                <span className="text-gray-400 font-mono text-sm"> UPLOAD COVER ASSET</span>
               </label>
             </div>
-            <button disabled={loading} className="w-full rounded-xl bg-cyan-600 py-4 font-bold text-white transition hover:bg-cyan-700 disabled:opacity-50">
-              {loading ? "Publishing..." : "Publish Course"}
+
+            <button disabled={loading} className="w-full bg-cyan-500 py-5 font-black uppercase tracking-[0.2em] text-[#050505] hover:bg-white transition-all disabled:opacity-50">
+              {loading ? "PROCESSING..." : "PUBLISH MODULE"}
             </button>
           </form>
         </div>

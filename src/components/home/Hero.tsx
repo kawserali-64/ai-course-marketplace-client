@@ -1,19 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade, Navigation } from "swiper/modules";
-import {
-  FiArrowRight,
-  FiChevronLeft,
-  FiChevronRight,
-} from "react-icons/fi";
-import {
-  FaBookOpen,
-  FaUsers,
-  FaChalkboardTeacher
-} from "react-icons/fa";
+import { FiArrowRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { useState } from "react";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -39,91 +32,69 @@ const slides = [
 ];
 
 const Hero = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
-    <section className="relative w-full pb-20 pt-10">
-      <div className="mx-auto max-w-7xl px-4">
-        <div className="relative overflow-hidden rounded-[2.5rem] shadow-2xl">
+    <section className="relative w-full bg-[#050505] pt-12 pb-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        {/* Main Slider */}
+        <div className="relative overflow-hidden rounded-none shadow-2xl border border-gray-900 h-[600px]">
           <Swiper
             modules={[Autoplay, Pagination, EffectFade, Navigation]}
             effect="fade"
+            fadeEffect={{ crossFade: true }}
             navigation={{ nextEl: ".btn-next", prevEl: ".btn-prev" }}
             autoplay={{ delay: 5000, disableOnInteraction: false }}
-            pagination={{ clickable: true }}
+            pagination={{ 
+              clickable: true,
+              bulletClass: "swiper-pagination-bullet !w-2 !h-2 !bg-gray-700 !opacity-100 !mx-1",
+              bulletActiveClass: "!bg-cyan-500",
+            }}
             loop
-            className="h-[500px] md:h-[600px] w-full"
+            onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+            className="h-full w-full"
           >
             {slides.map((slide, index) => (
               <SwiperSlide key={index}>
-                <div
-                  className="relative flex h-full w-full items-center justify-center bg-cover bg-center"
-                  style={{ backgroundImage: `url(${slide.image})` }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30"></div>
-
-                  <div className="relative z-10 px-6 text-center text-white">
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-                        {slide.title}
-                      </h1>
-                      <p className="max-w-2xl mx-auto text-lg md:text-xl text-gray-200 mb-10">
-                        {slide.subtitle}
-                      </p>
-                      <div className="flex flex-wrap justify-center gap-4">
-                        <Link
-                          href="/courses"
-                          className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-cyan-600/20"
-                        >
-                          Browse Courses
-                          <FiArrowRight />
-                        </Link>
-                        <Link
-                          href="/courses/add"
-                          className="flex items-center gap-2 bg-white/10 hover:bg-white text-white hover:text-cyan-600 border border-white/20 px-8 py-4 rounded-full font-bold backdrop-blur transition-all"
-                        >
-                          Become Instructor
-                        </Link>
-                      </div>
-                    </motion.div>
+                <div className="relative flex h-full w-full items-center justify-center">
+                  <Image src={slide.image} alt={slide.title} fill priority={index === 0} className="object-cover" />
+                  <div className="absolute inset-0 bg-black/60" />
+                  <div className="relative z-10 w-full max-w-[700px] px-8 text-center text-white">
+                    <AnimatePresence mode="wait">
+                      {activeIndex === index && (
+                        <motion.div key={index} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.5 }}>
+                          <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter leading-[1]">{slide.title}</h1>
+                          <p className="text-base md:text-lg text-gray-400 mb-10">{slide.subtitle}</p>
+                          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <Link href="/courses" className="px-8 py-3 bg-cyan-500 text-black font-bold uppercase tracking-widest hover:bg-white transition-all">Browse Courses</Link>
+                            <Link href="/courses/add" className="px-8 py-3 bg-transparent border border-gray-700 text-white font-bold uppercase tracking-widest hover:bg-gray-800 transition-all">Instructor</Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
               </SwiperSlide>
             ))}
-
-            <button className="btn-prev absolute left-6 top-1/2 z-20 flex h-14 w-14 items-center justify-center rounded-full bg-white/10 hover:bg-white text-white hover:text-cyan-600 backdrop-blur-md transition-all">
-              <FiChevronLeft size={28} />
-            </button>
-            <button className="btn-next absolute right-6 top-1/2 z-20 flex h-14 w-14 items-center justify-center rounded-full bg-white/10 hover:bg-white text-white hover:text-cyan-600 backdrop-blur-md transition-all">
-              <FiChevronRight size={28} />
-            </button>
+            <button className="btn-prev absolute left-6 top-1/2 -translate-y-1/2 z-20 text-white/50 hover:text-cyan-500"><FiChevronLeft size={40} /></button>
+            <button className="btn-next absolute right-6 top-1/2 -translate-y-1/2 z-20 text-white/50 hover:text-cyan-500"><FiChevronRight size={40} /></button>
           </Swiper>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="relative z-30 -mt-16 mx-4 md:mx-16 bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-8 md:p-10 flex flex-col md:flex-row justify-around items-center gap-8"
-        >
+        {/* NEW FEATURE PILLARS - Pro Level Architecture */}
+        <div className="relative z-30 -mt-8 mx-0 md:mx-20 grid grid-cols-1 md:grid-cols-3 border-l border-b border-gray-900">
           {[
-            { icon: FaBookOpen, val: "500+", label: "Premium Courses" },
-            { icon: FaUsers, val: "10K+", label: "Students" },
-            { icon: FaChalkboardTeacher, val: "150+", label: "Expert Instructors" },
+            { title: "SYSTEM ARCHITECTURE", desc: "Build scalable AI models from the ground up." },
+            { title: "PRODUCTION READY", desc: "Learn to deploy models to real-world environments." },
+            { title: "INDUSTRY STANDARDS", desc: "Master the tools used by elite AI engineers." },
           ].map((item, i) => (
-            <div key={i} className="flex items-center gap-4 group">
-              <div className="bg-cyan-50 group-hover:bg-cyan-600 text-cyan-600 group-hover:text-white p-4 rounded-2xl transition-colors duration-300">
-                <item.icon size={32} />
-              </div>
-              <div>
-                <h3 className="text-3xl font-extrabold text-gray-900">{item.val}</h3>
-                <p className="text-gray-500 font-medium">{item.label}</p>
-              </div>
+            <div key={i} className="bg-[#0a0a0a] border-t border-r border-gray-900 p-8 hover:bg-[#0f0f0f] transition-all">
+              <div className="w-8 h-8 border border-cyan-500 mb-6"></div>
+              <h3 className="text-white font-black uppercase tracking-[0.2em] mb-3">{item.title}</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

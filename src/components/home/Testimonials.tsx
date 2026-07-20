@@ -1,143 +1,61 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { FaQuoteLeft, FaStar } from "react-icons/fa";
 
 const testimonials = [
   {
-    id: 1,
-    name: "Sarah Ahmed",
-    role: "AI Student",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-    rating: 5,
-    review:
-      "The courses are well structured and very easy to follow. I built my first AI project after completing just one course.",
+    quote: "The system architecture is remarkably clean. It's rare to see this level of abstraction.",
+    user: "David Chen",
+    role: "Staff Engineer @ CloudScale",
   },
   {
-    id: 2,
-    name: "Rahim Hasan",
-    role: "Machine Learning Engineer",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-    rating: 5,
-    review:
-      "The practical projects and real-world examples helped me improve my AI skills and prepare for technical interviews.",
+    quote: "Depth of technical insight provided here surpasses most enterprise-level training.",
+    user: "Sarah Jenkins",
+    role: "Lead Architect @ AI Labs",
   },
   {
-    id: 3,
-    name: "Nusrat Jahan",
-    role: "University Student",
-    image: "https://randomuser.me/api/portraits/women/68.jpg",
-    rating: 5,
-    review:
-      "I loved the hands-on learning experience. The instructors explain complex AI concepts in a simple and engaging way.",
+    quote: "A masterclass in UI/UX efficiency. Truly professional grade.",
+    user: "Marcus Thorne",
+    role: "Senior Dev @ QuantStream",
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: {
-    opacity: 0,
-    y: 40,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-
 export default function Testimonials() {
   return (
-    <section className="bg-gray-50 py-20">
-      <div className="mx-auto max-w-7xl px-5">
+    <section className="bg-[#050505] py-24 relative">
+      {/* Decorative Grid Background */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none" 
+           style={{ backgroundImage: `linear-gradient(#1f1f1f 1px, transparent 1px), linear-gradient(90deg, #1f1f1f 1px, transparent 1px)`, backgroundSize: '40px 40px' }}>
+      </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mx-auto mb-14 max-w-2xl text-center"
-        >
-          <span className="rounded-full bg-cyan-100 px-4 py-2 text-sm font-bold text-cyan-600">
-            Testimonials
-          </span>
+      <div className="mx-auto max-w-7xl px-5 relative z-10">
+        
+        <div className="mb-20">
+          <h2 className="text-sm font-bold tracking-[0.4em] text-cyan-500 uppercase mb-4">Technical Endorsements</h2>
+          <p className="text-5xl md:text-7xl font-black text-white italic tracking-tight">Verified by Peers.</p>
+        </div>
 
-          <h2 className="mt-5 text-4xl font-bold text-gray-900">
-            What Our Students Say
-          </h2>
-
-          <p className="mt-4 text-gray-600">
-            Thousands of learners are building AI skills through our
-            practical, project-based courses.
-          </p>
-        </motion.div>
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
-        >
-          {testimonials.map((testimonial) => (
-            <motion.div
-              key={testimonial.id}
-              variants={cardVariants}
-              whileHover={{ y: -8 }}
-              className="flex h-full flex-col rounded-3xl border border-gray-200 bg-white p-8 shadow-sm transition hover:shadow-xl"
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {testimonials.map((t, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              className="relative p-8 bg-[#0a0a0a]/80 backdrop-blur-md border border-gray-800 rounded-sm hover:border-cyan-500 transition-all duration-300"
             >
-              <div className="mb-6 flex items-center justify-between">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-cyan-100 text-cyan-600">
-                  <FaQuoteLeft size={20} />
-                </div>
-
-                <div className="flex gap-1 text-yellow-400">
-                  {Array.from({ length: testimonial.rating }).map((_, index) => (
-                    <FaStar key={index} size={16} />
-                  ))}
-                </div>
-              </div>
-
-              <p className="flex-1 leading-7 text-gray-600">
-                "{testimonial.review}"
+              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-cyan-500 to-transparent opacity-50" />
+              
+              <p className="text-white text-lg font-light leading-relaxed mb-8">
+                “{t.quote}”
               </p>
-
-              <div className="my-6 border-t border-gray-200" />
-
-              <div className="flex items-center gap-4">
-                <Image
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  width={60}
-                  height={60}
-                  className="rounded-full border-2 border-cyan-500 object-cover"
-                />
-
-                <div>
-                  <h4 className="font-bold text-gray-900">
-                    {testimonial.name}
-                  </h4>
-
-                  <p className="text-sm text-gray-500">
-                    {testimonial.role}
-                  </p>
-                </div>
+              
+              <div className="mt-auto">
+                <h4 className="text-white font-bold text-sm tracking-widest uppercase">{t.user}</h4>
+                <p className="text-cyan-700 text-[10px] font-mono mt-1">{t.role}</p>
               </div>
             </motion.div>
           ))}
-        </motion.div>
-
+        </div>
       </div>
     </section>
   );

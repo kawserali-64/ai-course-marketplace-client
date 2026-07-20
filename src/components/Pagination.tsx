@@ -26,11 +26,10 @@ export default function Pagination({
 
   return (
     <div className="mt-14 flex flex-wrap items-center justify-center gap-2">
-
       <button
         disabled={currentPage === 1}
         onClick={() => goToPage(currentPage - 1)}
-        className="rounded-xl border px-4 py-2 transition hover:bg-cyan-600 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+        className="rounded-xl border border-gray-800 bg-[#0a0a0a] px-4 py-2 text-gray-400 transition hover:border-cyan-500 hover:bg-cyan-950/30 hover:text-cyan-400 disabled:cursor-not-allowed disabled:opacity-30"
       >
         Previous
       </button>
@@ -42,10 +41,11 @@ export default function Pagination({
           <button
             key={page}
             onClick={() => goToPage(page)}
-            className={`h-11 w-11 rounded-xl border transition ${currentPage === page
+            className={`h-11 w-11 rounded-xl border transition ${
+              currentPage === page
                 ? "border-cyan-600 bg-cyan-600 text-white"
-                : "hover:bg-cyan-50"
-              }`}
+                : "border-gray-800 bg-[#0a0a0a] text-gray-400 hover:border-gray-600 hover:bg-[#111]"
+            }`}
           >
             {page}
           </button>
@@ -55,11 +55,10 @@ export default function Pagination({
       <button
         disabled={currentPage === totalPages}
         onClick={() => goToPage(currentPage + 1)}
-        className="rounded-xl border px-4 py-2 transition hover:bg-cyan-600 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+        className="rounded-xl border border-gray-800 bg-[#0a0a0a] px-4 py-2 text-gray-400 transition hover:border-cyan-500 hover:bg-cyan-950/30 hover:text-cyan-400 disabled:cursor-not-allowed disabled:opacity-30"
       >
         Next
       </button>
-
     </div>
   );
 }

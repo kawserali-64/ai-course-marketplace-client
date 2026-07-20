@@ -35,19 +35,19 @@ export default function FeaturedCourses() {
   const courses: Course[] = data?.courses || [];
 
   return (
-    <section className="bg-white py-20">
+    <section className="bg-[#050505] py-20">
       <div className="mx-auto w-full max-w-7xl px-5">
         {/* Heading */}
         <div className="mb-16 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-600">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-500">
             Featured Courses
           </span>
 
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-gray-900 md:text-4xl">
+          <h2 className="mt-3 text-3xl font-black tracking-tight text-white md:text-4xl">
             Learn From The Best AI Courses
           </h2>
 
-          <p className="mx-auto mt-4 max-w-xl text-sm text-gray-500 md:text-base">
+          <p className="mx-auto mt-4 max-w-xl text-sm text-gray-400 md:text-base">
             Explore our most popular AI courses carefully selected for beginners
             and professionals.
           </p>
@@ -58,13 +58,13 @@ export default function FeaturedCourses() {
             {Array.from({ length: 6 }).map((_, index) => (
               <div
                 key={index}
-                className="h-[400px] w-full animate-pulse rounded-3xl bg-gray-100"
+                className="h-[400px] w-full animate-pulse rounded-3xl bg-[#0a0a0a] border border-gray-800"
               />
             ))}
           </div>
         ) : courses.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-gray-200 bg-gray-50 py-20 text-center">
-            <h3 className="text-lg font-bold text-gray-800">
+          <div className="rounded-3xl border border-dashed border-gray-800 bg-[#0a0a0a] py-20 text-center">
+            <h3 className="text-lg font-bold text-white">
               No Featured Courses Found
             </h3>
 

@@ -1,105 +1,59 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  FaBookOpen,
-  FaChalkboardTeacher,
-  FaUsers,
-  FaHeadset,
-  FaCertificate,
-  FaRobot,
-} from "react-icons/fa";
+import { FaBookOpen, FaChalkboardTeacher, FaUsers, FaHeadset, FaCertificate, FaRobot } from "react-icons/fa";
 
-const partners = [
-  {
-    id: 1,
-    title: "Premium Courses",
-    icon: FaBookOpen,
-  },
-  {
-    id: 2,
-    title: "Expert Instructors",
-    icon: FaChalkboardTeacher,
-  },
-  {
-    id: 3,
-    title: "Active Students",
-    icon: FaUsers,
-  },
-  {
-    id: 4,
-    title: "24/7 Support",
-    icon: FaHeadset,
-  },
-  {
-    id: 5,
-    title: "Certified Learning",
-    icon: FaCertificate,
-  },
-  {
-    id: 6,
-    title: "Latest AI Skills",
-    icon: FaRobot,
-  },
+const features = [
+  { title: "Premium Courses", icon: FaBookOpen },
+  { title: "Expert Mentors", icon: FaChalkboardTeacher },
+  { title: "Global Community", icon: FaUsers },
+  { title: "24/7 Support", icon: FaHeadset },
+  { title: "Certified Skills", icon: FaCertificate },
+  { title: "Latest AI Stack", icon: FaRobot },
 ];
 
-export default function TrustedPartners() {
+export default function Features() {
   return (
-    <section className="bg-white py-24">
+    <section className="bg-[#050505] py-32">
       <div className="mx-auto max-w-7xl px-5">
-
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mx-auto mb-20 max-w-2xl text-center"
-        >
-          <span className="text-xs font-bold uppercase tracking-widest text-cyan-600">
-            Why Learn With Us
-          </span>
-
-          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl">
-            Everything You Need To Master AI
+        
+        {/* Header - Minimalist */}
+        <div className="mb-24">
+          <p className="text-cyan-500 font-mono text-sm mb-4">// System capabilities</p>
+          <h2 className="text-5xl md:text-7xl font-black text-white italic tracking-tighter">
+            Precision Built.
           </h2>
+        </div>
 
-          <p className="mt-5 text-lg text-gray-500">
-            Learn modern Artificial Intelligence through practical courses,
-            experienced instructors, and hands-on projects.
-          </p>
-        </motion.div>
-
-        {/* Feature Grid */}
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-6">
-          {partners.map((partner, index) => {
-            const Icon = partner.icon;
-
+        {/* Blueprint Grid - No Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
+          {features.map((item, index) => {
+            const Icon = item.icon;
             return (
               <motion.div
-                key={partner.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.05,
-                }}
-                viewport={{ once: true }}
-                whileHover={{ y: -8 }}
-                className="group flex flex-col items-center rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition-all duration-300 hover:border-cyan-200 hover:shadow-lg"
+                key={index}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+                className="group relative p-10 border-b border-r border-gray-900 hover:border-cyan-500/30 transition-colors duration-500"
               >
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 transition duration-300 group-hover:bg-cyan-600 group-hover:text-white">
-                  <Icon size={28} />
+                <div className="flex items-center gap-6 mb-6">
+                  <div className="text-cyan-500 group-hover:scale-110 transition-transform">
+                    <Icon size={24} />
+                  </div>
+                  <div className="w-full h-px bg-gray-900 group-hover:bg-cyan-500/20" />
                 </div>
-
-                <h3 className="mt-6 text-center text-sm font-bold text-gray-700">
-                  {partner.title}
+                
+                <h3 className="text-xl font-bold text-white tracking-widest uppercase">
+                  {item.title}
                 </h3>
+                <p className="text-gray-500 text-sm mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                  High-performance modules optimized for rapid deployment.
+                </p>
               </motion.div>
             );
           })}
         </div>
-
       </div>
     </section>
   );

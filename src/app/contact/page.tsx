@@ -1,168 +1,84 @@
+import Link from "next/link";
+
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-gray-50 py-16">
-      <div className="mx-auto w-full max-w-6xl px-4">
-
-        {/* Hero */}
-        <section className="text-center">
-          <span className="text-sm font-bold uppercase tracking-widest text-cyan-600">
-            Contact Us
-          </span>
-
-          <h1 className="mt-4 text-4xl font-extrabold text-gray-900 md:text-5xl">
-            Get in Touch with Next Skill AI
+    <main className="min-h-screen bg-[#050505] text-white py-20 px-6">
+      <div className="mx-auto w-full max-w-6xl">
+        
+        {/* Hero Section */}
+        <section className="text-center mb-20">
+          <span className="text-cyan-400 font-bold tracking-[0.2em] uppercase text-sm">Contact Us</span>
+          <h1 className="mt-6 text-5xl md:text-7xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
+            Get in Touch
           </h1>
-
-          <p className="mx-auto mt-5 max-w-2xl text-lg text-gray-600">
-            Have questions about our AI courses, instructors, or your learning
-            journey? Our team is always ready to help.
+          <p className="mt-6 max-w-2xl mx-auto text-lg text-gray-400">
+            Have questions about our AI courses, instructors, or your learning journey? Our team is always ready to help.
           </p>
         </section>
 
         {/* Contact Info + Form */}
-        <section className="mt-14 grid gap-8 lg:grid-cols-2">
-
+        <section className="grid gap-12 lg:grid-cols-2">
+          
           {/* Contact Information */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-            <h2 className="mb-6 text-2xl font-bold text-gray-900">
-              Contact Information
-            </h2>
-
+          <div className="space-y-8">
+            <h2 className="text-3xl font-bold">Contact Information</h2>
             <div className="space-y-6">
-
-              <div>
-                <h3 className="font-semibold text-gray-800">
-                  Email
-                </h3>
-
-                <p className="mt-1 text-gray-600">
-                  support@nextskillai.com
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-gray-800">
-                  Phone
-                </h3>
-
-                <p className="mt-1 text-gray-600">
-                  +880 1700-000000
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-gray-800">
-                  Office
-                </h3>
-
-                <p className="mt-1 text-gray-600">
-                  Dhaka, Bangladesh
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-gray-800">
-                  Support Hours
-                </h3>
-
-                <p className="mt-1 text-gray-600">
-                  Saturday – Thursday
-                  <br />
-                  9:00 AM – 6:00 PM
-                </p>
-              </div>
-
+              {[
+                { title: "Email", val: "support@nextskillai.com" },
+                { title: "Phone", val: "+880 1700-000000" },
+                { title: "Office", val: "Dhaka, Bangladesh" },
+                { title: "Support Hours", val: "Saturday – Thursday | 9:00 AM – 6:00 PM" }
+              ].map((item, i) => (
+                <div key={i} className="p-6 rounded-3xl bg-[#0a0a0a] border border-gray-800 hover:border-cyan-500/50 transition-colors">
+                  <h3 className="text-cyan-400 font-bold text-sm uppercase tracking-widest mb-2">{item.title}</h3>
+                  <p className="text-xl font-semibold">{item.val}</p>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Contact Form */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-            <h2 className="mb-6 text-2xl font-bold text-gray-900">
-              Send Us a Message
-            </h2>
-
+          <div className="p-8 md:p-10 rounded-3xl bg-[#0a0a0a] border border-gray-800 shadow-2xl">
+            <h2 className="text-3xl font-bold mb-8">Send Us a Message</h2>
             <form className="space-y-5">
-
-              <input
-                type="text"
-                placeholder="Full Name"
-                className="h-12 w-full rounded-xl border border-gray-300 px-4 outline-none transition focus:border-cyan-600"
-              />
-
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="h-12 w-full rounded-xl border border-gray-300 px-4 outline-none transition focus:border-cyan-600"
-              />
-
-              <input
-                type="text"
-                placeholder="Subject"
-                className="h-12 w-full rounded-xl border border-gray-300 px-4 outline-none transition focus:border-cyan-600"
-              />
-
+              {["Full Name", "Email Address", "Subject"].map((placeholder) => (
+                <input
+                  key={placeholder}
+                  type="text"
+                  placeholder={placeholder}
+                  className="h-14 w-full rounded-2xl bg-[#050505] border border-gray-800 px-6 outline-none transition focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                />
+              ))}
               <textarea
                 rows={5}
                 placeholder="Write your message..."
-                className="w-full rounded-xl border border-gray-300 p-4 outline-none transition focus:border-cyan-600"
+                className="w-full rounded-2xl bg-[#050505] border border-gray-800 p-6 outline-none transition focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
               />
-
               <button
                 type="submit"
-                className="h-12 w-full rounded-xl bg-cyan-600 font-semibold text-white transition hover:bg-cyan-700"
+                className="h-14 w-full rounded-2xl bg-white text-black font-black text-lg hover:bg-cyan-400 transition-all duration-300"
               >
                 Send Message
               </button>
-
             </form>
           </div>
-
         </section>
 
-        {/* FAQ */}
-        <section className="mt-16">
-
-          <h2 className="mb-8 text-center text-3xl font-bold text-gray-900">
-            Frequently Asked Questions
-          </h2>
-
-          <div className="space-y-5">
-
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-              <h3 className="font-semibold text-gray-900">
-                How do I enroll in a course?
-              </h3>
-
-              <p className="mt-2 text-gray-600">
-                Browse our course catalog, open the course details page, and
-                enroll in the course that best matches your learning goals.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-              <h3 className="font-semibold text-gray-900">
-                Can I publish my own course?
-              </h3>
-
-              <p className="mt-2 text-gray-600">
-                Yes. After signing in, you can add, manage, and remove your own
-                AI courses from your dashboard.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-              <h3 className="font-semibold text-gray-900">
-                Are all instructors verified?
-              </h3>
-
-              <p className="mt-2 text-gray-600">
-                Yes. Every instructor profile is reviewed before courses are
-                published to maintain quality and trust.
-              </p>
-            </div>
-
+        {/* FAQ Section */}
+        <section className="mt-32">
+          <h2 className="mb-12 text-center text-3xl font-bold">Frequently Asked Questions</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { q: "How do I enroll?", a: "Browse our course catalog, open the course details page, and enroll." },
+              { q: "Publish a course?", a: "Yes, after signing in, you can manage your AI courses from your dashboard." },
+              { q: "Are instructors verified?", a: "Yes, every instructor profile is reviewed to maintain quality." }
+            ].map((faq, i) => (
+              <div key={i} className="p-8 rounded-3xl bg-[#0a0a0a] border border-gray-800 hover:border-cyan-500/30 transition-all">
+                <h3 className="font-bold text-lg mb-3">{faq.q}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
           </div>
-
         </section>
 
       </div>

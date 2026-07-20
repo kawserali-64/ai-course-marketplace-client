@@ -2,160 +2,67 @@ import Link from "next/link";
 
 export default function AboutPage() {
   return (
-    <main className="mx-auto max-w-7xl px-6 py-16">
-
-      {/* Hero */}
-      <section className="text-center">
-        <span className="text-sm font-bold uppercase tracking-widest text-cyan-600">
-          About Us
-        </span>
-
-        <h1 className="mt-4 text-4xl font-extrabold text-gray-900 md:text-5xl">
-          Empowering the Future with AI Education
+    <main className="min-h-screen bg-[#050505] text-white px-6 py-20">
+      
+      {/* Hero Section */}
+      <section className="text-center mb-32 relative">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-cyan-500/20 rounded-full blur-[120px]"></div>
+        <span className="text-cyan-400 font-bold tracking-[0.2em] uppercase text-sm">About Us</span>
+        <h1 className="mt-6 text-6xl md:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
+          Next Skill AI
         </h1>
-
-        <p className="mx-auto mt-6 max-w-3xl text-lg text-gray-600">
-          Next Skill AI is an online AI course marketplace where students,
-          professionals, and instructors connect to learn the latest Artificial
-          Intelligence technologies through high-quality courses.
+        <p className="mt-8 text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          Crafting the next generation of AI engineers through a premium, cinematic learning experience.
         </p>
       </section>
 
-      {/* Mission */}
-      <section className="mt-16">
-        <h2 className="mb-4 text-3xl font-bold text-gray-900">
-          Our Mission
-        </h2>
-
-        <p className="leading-8 text-gray-600">
-          Our mission is to make AI education accessible to everyone by
-          providing expert-led courses, practical learning experiences, and a
-          trusted platform where instructors can share knowledge with learners
-          around the world.
-        </p>
+      {/* Cards Section */}
+      <section className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[
+          { title: "Expert Led", desc: "Industry-grade curriculum." },
+          { title: "Project Based", desc: "Build real AI solutions." },
+          { title: "Smart Tracks", desc: "Curated learning paths." },
+          { title: "Global Scale", desc: "Learn from anywhere." }
+        ].map((item, i) => (
+          <div key={i} className="group relative p-[1px] rounded-3xl bg-gradient-to-b from-gray-800 to-transparent hover:from-cyan-500 hover:to-transparent transition-all duration-500">
+            <div className="bg-[#0a0a0a] p-8 rounded-[22px] h-full hover:bg-[#111] transition-colors">
+              <div className="w-12 h-12 rounded-2xl bg-gray-900 flex items-center justify-center mb-6 border border-gray-800 text-cyan-400 group-hover:scale-110 transition-transform">
+                {i + 1}
+              </div>
+              <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+            </div>
+          </div>
+        ))}
       </section>
 
-      {/* Why Choose Us */}
-      <section className="mt-16">
-        <h2 className="mb-8 text-3xl font-bold text-gray-900">
-          Why Choose Next Skill AI?
-        </h2>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h3 className="mb-3 text-xl font-semibold text-gray-900">
-              Expert Instructors
-            </h3>
-
-            <p className="text-gray-600">
-              Learn from experienced AI professionals and industry experts.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h3 className="mb-3 text-xl font-semibold text-gray-900">
-              Practical Learning
-            </h3>
-
-            <p className="text-gray-600">
-              Gain hands-on experience through real-world AI projects and
-              exercises.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h3 className="mb-3 text-xl font-semibold text-gray-900">
-              Wide Course Collection
-            </h3>
-
-            <p className="text-gray-600">
-              Explore courses covering Machine Learning, Deep Learning, NLP,
-              Computer Vision, and more.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h3 className="mb-3 text-xl font-semibold text-gray-900">
-              Learn Anywhere
-            </h3>
-
-            <p className="text-gray-600">
-              Access your favorite AI courses anytime from desktop, tablet, or
-              mobile devices.
-            </p>
-          </div>
-
+      {/* Stats - Cinematic Style */}
+      <section className="max-w-5xl mx-auto my-32 border border-gray-800 bg-[#0a0a0a] rounded-[3rem] p-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+          {[
+            { val: "500+", label: "Courses" },
+            { val: "10K+", label: "Students" },
+            { val: "120+", label: "Mentors" },
+            { val: "4.9", label: "Rating" }
+          ].map((stat, i) => (
+            <div key={i}>
+              <div className="text-5xl font-black mb-2 text-white">{stat.val}</div>
+              <div className="text-cyan-500 text-xs font-bold uppercase tracking-widest">{stat.label}</div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Statistics */}
-      <section className="mt-16 rounded-3xl bg-cyan-50 p-10">
-        <div className="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
-
-          <div>
-            <h3 className="text-3xl font-extrabold text-cyan-600">
-              500+
-            </h3>
-
-            <p className="mt-2 text-gray-600">
-              AI Courses
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-3xl font-extrabold text-cyan-600">
-              10K+
-            </h3>
-
-            <p className="mt-2 text-gray-600">
-              Students
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-3xl font-extrabold text-cyan-600">
-              120+
-            </h3>
-
-            <p className="mt-2 text-gray-600">
-              Expert Instructors
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-3xl font-extrabold text-cyan-600">
-              4.9★
-            </h3>
-
-            <p className="mt-2 text-gray-600">
-              Average Rating
-            </p>
-          </div>
-
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="mt-16 text-center">
-
-        <h2 className="text-3xl font-bold text-gray-900">
-          Ready to Start Your AI Journey?
-        </h2>
-
-        <p className="mt-4 text-gray-600">
-          Explore premium AI courses and learn from experienced instructors.
-        </p>
-
+      {/* CTA Section */}
+      <section className="text-center py-20">
         <Link
           href="/courses"
-          className="mt-8 inline-block rounded-xl bg-cyan-600 px-8 py-3 font-semibold text-white transition hover:bg-cyan-700"
+          className="group relative inline-flex items-center px-12 py-5 bg-white text-black font-black text-lg rounded-full hover:bg-cyan-400 transition-all duration-300 shadow-[0_0_50px_-12px_rgba(34,211,238,0.4)]"
         >
           Explore Courses
+          <span className="ml-3 group-hover:translate-x-2 transition-transform">→</span>
         </Link>
-
       </section>
-
     </main>
   );
 }

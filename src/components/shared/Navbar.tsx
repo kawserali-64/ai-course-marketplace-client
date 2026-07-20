@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { FaBars, FaTimes, FaGraduationCap } from "react-icons/fa";
+import { FaBars, FaGraduationCap } from "react-icons/fa";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -28,23 +28,24 @@ export default function Navbar() {
     <Link
       href={href}
       onClick={() => setOpen(false)}
-      className={`px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full ${pathname === href
-        ? "text-cyan-700 bg-cyan-50"
-        : "text-gray-600 hover:text-cyan-600 hover:bg-cyan-50/50"
-        }`}
+      className={`px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full ${
+        pathname === href
+          ? "text-cyan-400 bg-cyan-950/30"
+          : "text-gray-400 hover:text-cyan-400 hover:bg-gray-800/50"
+      }`}
     >
       {label}
     </Link>
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/70 backdrop-blur-md shadow-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-[#050505]/90 backdrop-blur-xl shadow-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 text-xl font-bold text-cyan-600">
+        <Link href="/" className="flex items-center gap-2.5 text-xl font-bold text-white">
           <div className="flex items-center justify-center rounded-lg bg-cyan-600 p-2 text-white">
             <FaGraduationCap size={20} />
           </div>
-          <span className="text-gray-900 font-bold">
+          <span className="text-white font-bold">
             AI Course
           </span>
         </Link>
@@ -67,30 +68,30 @@ export default function Navbar() {
 
         <div className="hidden md:flex items-center gap-4">
           {isPending ? (
-            <div className="h-10 w-24 animate-pulse rounded-full bg-gray-100" />
+            <div className="h-10 w-24 animate-pulse rounded-full bg-gray-800" />
           ) : !user ? (
             <>
-              <Link href="/signin" className="text-sm font-semibold text-gray-600 hover:text-cyan-600 transition-colors">Sign In</Link>
-              <Link href="/signup" className="rounded-full bg-cyan-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-600/20 hover:bg-cyan-700 transition-all active:scale-95">Sign Up</Link>
+              <Link href="/signin" className="px-4 py-2.5 text-sm font-semibold text-gray-400 hover:text-white transition-colors">Sign In</Link>
+              <Link href="/signup" className="rounded-full bg-cyan-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-cyan-500 transition-all">Sign Up</Link>
             </>
           ) : (
             <div className="flex items-center gap-4">
-              <Link href="/profile" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <Image src={user.image || "/avatar.png"} alt={user.name || "User"} width={36} height={36} className="h-9 w-9 rounded-full object-cover border border-gray-200" />
-                <span className="text-sm font-semibold text-gray-700">{user.name}</span>
+              <Link href="/courses/profile" className="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-gray-800 transition-all">
+                <Image src={user.image || "/avatar.png"} alt={user.name || "User"} width={36} height={36} className="h-9 w-9 rounded-full object-cover border border-gray-700" />
+                <span className="text-sm font-semibold text-white">{user.name}</span>
               </Link>
-              <button onClick={handleLogout} className="rounded-full border border-red-200 px-4 py-2 text-sm text-red-600 transition-all hover:bg-red-50 hover:text-red-700">Logout</button>
+              <button onClick={handleLogout} className="px-4 py-2.5 text-sm font-semibold text-gray-400 hover:text-red-400 rounded-xl transition-all">Logout</button>
             </div>
           )}
         </div>
 
-        <button onClick={() => setOpen(!open)} className="text-2xl md:hidden text-gray-600 p-2">
-          {open ? <FaTimes /> : <FaBars />}
+        <button onClick={() => setOpen(!open)} className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl text-gray-400 hover:text-white hover:bg-gray-800 transition-all">
+          <FaBars size={20} />
         </button>
       </div>
 
       {open && (
-        <div className="absolute top-16 w-full border-b bg-white/95 backdrop-blur-xl p-5 shadow-2xl md:hidden animate-in slide-in-from-top-5 duration-300">
+        <div className="absolute top-16 w-full border-b border-gray-800 bg-[#0a0a0a]/95 backdrop-blur-xl p-5 shadow-2xl md:hidden">
           <nav className="flex flex-col gap-3">
             {navLink("/", "Home")}
             {navLink("/courses", "Courses")}
@@ -105,19 +106,19 @@ export default function Navbar() {
                 {navLink("/profile", "Profile")}
               </>
             )}
-            <div className="mt-4 border-t pt-4">
+            <div className="mt-4 border-t border-gray-800 pt-4">
               {!user ? (
                 <div className="flex flex-col gap-3">
-                  <Link href="/signin" className="w-full rounded-full py-3 text-center font-semibold text-gray-600">Sign In</Link>
+                  <Link href="/signin" className="w-full rounded-full py-3 text-center font-semibold text-gray-400">Sign In</Link>
                   <Link href="/signup" className="w-full rounded-full bg-cyan-600 py-3 text-center font-semibold text-white">Sign Up</Link>
                 </div>
               ) : (
                 <div className="flex flex-col gap-4">
                   <Link href="/profile" className="flex items-center gap-3">
                     <Image src={user.image || "/avatar.png"} alt="User" width={40} height={40} className="h-10 w-10 rounded-full" />
-                    <span className="font-semibold text-gray-900">{user.name}</span>
+                    <span className="font-semibold text-white">{user.name}</span>
                   </Link>
-                  <button onClick={handleLogout} className="w-full rounded-full border border-red-200 py-3 text-red-600 hover:bg-red-50 font-semibold">Logout</button>
+                  <button onClick={handleLogout} className="w-full rounded-full border border-red-900/50 py-3 text-red-400 hover:bg-red-950/30 font-semibold">Logout</button>
                 </div>
               )}
             </div>

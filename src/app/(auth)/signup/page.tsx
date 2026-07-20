@@ -23,15 +23,11 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     setErrors({});
 
     const formData = new FormData(e.currentTarget);
-
     const name = String(formData.get("name") ?? "").trim();
     const email = String(formData.get("email") ?? "").trim();
     const image = String(formData.get("image") ?? "").trim();
@@ -39,7 +35,6 @@ export default function SignupPage() {
 
     const newErrors: Errors = {};
 
-    // Name validation
     if (!name) {
       newErrors.name = "Full name is required";
     } else if (name.length < 3) {
@@ -48,40 +43,30 @@ export default function SignupPage() {
       newErrors.name = "Name cannot exceed 50 characters";
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     if (!email) {
       newErrors.email = "Email is required";
     } else if (!emailRegex.test(email)) {
       newErrors.email = "Please enter a valid email";
     }
 
-    // Image validation
-    const imageRegex =
-      /^https?:\/\/.+\.(jpg|jpeg|png|webp|gif|svg)$/i;
-
+    const imageRegex = /^https?:\/\/.+\.(jpg|jpeg|png|webp|gif|svg)$/i;
     if (!image) {
       newErrors.image = "Profile image URL is required";
     } else if (!imageRegex.test(image)) {
       newErrors.image = "Please enter a valid image URL";
     }
 
-    // Password validation
     if (!password) {
       newErrors.password = "Password is required";
     } else if (password.length < 8) {
-      newErrors.password =
-        "Password must be minimum 8 characters";
+      newErrors.password = "Password must be minimum 8 characters";
     } else if (!/[A-Z]/.test(password)) {
-      newErrors.password =
-        "Password needs one uppercase letter";
+      newErrors.password = "Password needs one uppercase letter";
     } else if (!/[a-z]/.test(password)) {
-      newErrors.password =
-        "Password needs one lowercase letter";
+      newErrors.password = "Password needs one lowercase letter";
     } else if (!/[0-9]/.test(password)) {
-      newErrors.password =
-        "Password needs one number";
+      newErrors.password = "Password needs one number";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -90,23 +75,20 @@ export default function SignupPage() {
     }
 
     setLoading(true);
-
     const { error } = await authClient.signUp.email({
       name,
       email,
       password,
       image,
     });
-
     setLoading(false);
 
     if (error) {
-  toast.error(error.message ?? "Something went wrong");
-  return;
-}
+      toast.error(error.message ?? "Something went wrong");
+      return;
+    }
 
     toast.success("Account created successfully!");
-
     router.push("/");
     router.refresh();
   };
@@ -119,151 +101,86 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
+    <div className="flex min-h-screen items-center justify-center bg-[#050505] px-4 py-12">
+      <div className="w-full max-w-[400px] rounded-3xl border border-gray-800 bg-[#0a0a0a] p-8 shadow-2xl">
+        <div className="mb-8 text-center">
+          <h1 className="text-2xl font-black text-white">
+            Create an account
+          </h1>
+          <p className="mt-2 text-sm text-gray-400">
+            Get started with your free account.
+          </p>
+        </div>
 
-        <h1 className="mb-6 text-center text-3xl font-bold">
-          Create Account
-        </h1>
-
-        <form
-          onSubmit={handleSubmit}
-          className="w-full space-y-5"
-        >
-
-          <div>
-            <Label htmlFor="name">
-              Full Name
-            </Label>
-
-            <Input
-              id="name"
-              name="name"
-              placeholder="Enter your full name"
-              className="w-full"
-            />
-
-            {errors.name && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.name}
-              </p>
-            )}
+        <form onSubmit={handleSubmit} className="w-full space-y-4">
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs font-bold uppercase tracking-widest text-cyan-500" htmlFor="name">Full Name</Label>
+            <Input id="name" name="name" placeholder="John Doe" className="h-12 rounded-xl bg-[#050505] border-gray-800 focus:border-cyan-500" />
+            {errors.name && <p className="text-xs text-red-400">{errors.name}</p>}
           </div>
 
-
-          <div>
-            <Label htmlFor="email">
-              Email
-            </Label>
-
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="example@gmail.com"
-              className="w-full"
-            />
-
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.email}
-              </p>
-            )}
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs font-bold uppercase tracking-widest text-cyan-500" htmlFor="email">Email</Label>
+            <Input id="email" name="email" type="email" placeholder="name@example.com" className="h-12 rounded-xl bg-[#050505] border-gray-800 focus:border-cyan-500" />
+            {errors.email && <p className="text-xs text-red-400">{errors.email}</p>}
           </div>
 
-
-          <div>
-            <Label htmlFor="image">
-              Profile Image URL
-            </Label>
-
-            <Input
-              id="image"
-              name="image"
-              type="url"
-              placeholder="https://example.com/photo.jpg"
-              className="w-full"
-            />
-
-            {errors.image && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.image}
-              </p>
-            )}
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs font-bold uppercase tracking-widest text-cyan-500" htmlFor="image">Profile Image URL</Label>
+            <Input id="image" name="image" type="url" placeholder="https://example.com/avatar.jpg" className="h-12 rounded-xl bg-[#050505] border-gray-800 focus:border-cyan-500" />
+            {errors.image && <p className="text-xs text-red-400">{errors.image}</p>}
           </div>
 
-
-          <div>
-            <Label htmlFor="password">
-              Password
-            </Label>
-
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs font-bold uppercase tracking-widest text-cyan-500" htmlFor="password">Password</Label>
             <div className="relative">
               <Input
                 id="password"
                 name="password"
-                type={
-                  showPassword
-                    ? "text"
-                    : "password"
-                }
-                placeholder="Enter your password"
-                className="w-full pr-10"
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                className="h-12 rounded-xl w-full bg-[#050505] border-gray-800 focus:border-cyan-500"
               />
-
               <button
                 type="button"
-                onClick={() =>
-                  setShowPassword(!showPassword)
-                }
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-cyan-400"
               >
-                {showPassword ? (
-                  <FaEyeSlash size={18} />
-                ) : (
-                  <FaEye size={18} />
-                )}
+                {showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
               </button>
             </div>
-
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.password}
-              </p>
-            )}
+            {errors.password && <p className="text-xs text-red-400">{errors.password}</p>}
           </div>
 
-
-          <Button
-            type="submit"
-            // color="primary"
-            className="w-full"
-            // isLoading={loading}
-          >
-            Sign Up
+          <Button type="submit" className="h-12 w-full rounded-xl bg-cyan-600 font-bold text-white hover:bg-cyan-500 transition-all">
+            Create account
           </Button>
+
+          <div className="relative py-2">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-800"></div>
+            </div>
+            <div className="relative flex justify-center text-[10px] uppercase tracking-widest text-gray-500">
+              <span className="bg-[#0a0a0a] px-2">Or continue with</span>
+            </div>
+          </div>
+
           <Button
             type="button"
             onPress={handleGoogleSignup}
-            className="w-full h-12 rounded-xl border-2 border-gray-300 bg-white text-gray-700 font-semibold hover:border-cyan-600 hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-3"
+            className="h-12 w-full rounded-xl border border-gray-800 bg-[#111] text-gray-300 hover:bg-[#1a1a1a]"
           >
-            <FcGoogle size={22} />
-            Continue with Google
+            <FcGoogle size={18} />
+            Google
           </Button>
-
         </form>
 
-
-        <p className="mt-6 text-center text-sm">
+        <p className="mt-8 text-center text-xs text-gray-500">
           Already have an account?{" "}
-          <Link
-            href="/signin"
-            className="font-semibold text-blue-600 hover:underline"
-          >
+          <Link href="/signin" className="font-bold text-cyan-400 hover:underline">
             Login
           </Link>
         </p>
-
       </div>
     </div>
   );

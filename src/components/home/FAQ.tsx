@@ -1,99 +1,68 @@
 "use client";
 
-import { Accordion, AccordionItem } from "@heroui/react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const faqs = [
-  {
-    key: "1",
-    title: "How do I enroll in a course?",
-    content:
-      "Browse our AI courses, open the course details page, and enroll to start learning from expert instructors.",
-  },
-  {
-    key: "2",
-    title: "Are the courses beginner friendly?",
-    content:
-      "Yes. We offer courses for Beginner, Intermediate, and Advanced learners, so everyone can start at the right level.",
-  },
-  {
-    key: "3",
-    title: "Who teaches the courses?",
-    content:
-      "All courses are created by experienced AI engineers, instructors, and industry professionals with practical experience.",
-  },
-  {
-    key: "4",
-    title: "Can I publish my own AI course?",
-    content:
-      "Yes. After signing in, you can add, manage, and publish your own AI courses from your dashboard.",
-  },
-  {
-    key: "5",
-    title: "Will I have lifetime access?",
-    content:
-      "Yes. Once you enroll, you can access your courses anytime and continue learning at your own pace.",
-  },
+  { id: "1", title: "How do I enroll?", content: "Browse our AI courses, open the course details page, and enroll to start learning from expert instructors." },
+  { id: "2", title: "Are they beginner friendly?", content: "Yes. We offer courses for all levels: Beginner, Intermediate, and Advanced." },
+  { id: "3", title: "Who teaches the courses?", content: "All courses are created by industry-leading AI engineers and researchers." },
+  { id: "4", title: "Can I publish my own?", content: "Yes. Once signed in, use your creator dashboard to manage and publish your content." },
 ];
 
 export default function FAQ() {
+  const [activeId, setActiveId] = useState(faqs[0].id);
+
   return (
-    <section className="relative overflow-hidden bg-white py-24">
-      <div className="absolute left-1/2 top-0 -z-10 h-full w-full -translate-x-1/2 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-50/50 via-white to-white" />
-
-      <div className="mx-auto max-w-3xl px-5">
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
-        >
-          <span className="rounded-full bg-cyan-100 px-4 py-2 text-sm font-bold text-cyan-600">
-            FAQ
-          </span>
-
-          <h2 className="mt-5 text-5xl font-extrabold tracking-tight text-gray-900">
-            Frequently Asked <span className="text-cyan-600">Questions</span>
-          </h2>
-
-          <p className="mt-4 text-lg text-gray-500">
-            Everything you need to know about our AI Course Marketplace.
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <Accordion
-            variant="surface"
-            className="flex flex-col gap-4"
-          >
-            {faqs.map((faq) => (
-              <AccordionItem
-                key={faq.key}
-                aria-label={faq.title}
-                className="group rounded-3xl border border-gray-100 bg-white px-6 py-2 shadow-sm transition-all duration-300 hover:border-cyan-200 hover:shadow-cyan-500/5"
-              >
-                <span
-                  slot="title"
-                  className="text-lg font-bold text-gray-800"
+    <section className="bg-[#050505] py-24 border-t border-gray-900">
+      <div className="mx-auto max-w-6xl px-5">
+        <div className="grid md:grid-cols-12 gap-16">
+          
+          {/* Left Side: Navigation */}
+          <div className="md:col-span-5">
+            <h2 className="text-sm font-bold text-cyan-500 tracking-[0.3em] uppercase mb-6"> Knowledge Base</h2>
+            <div className="space-y-2">
+              {faqs.map((faq) => (
+                <button
+                  key={faq.id}
+                  onClick={() => setActiveId(faq.id)}
+                  className={`w-full text-left p-6 transition-all border ${
+                    activeId === faq.id 
+                    ? "bg-[#0a0a0a] border-cyan-500/50 text-white" 
+                    : "border-transparent text-gray-500 hover:text-gray-300"
+                  }`}
                 >
-                  {faq.title}
-                </span>
+                  <span className={`text-xl font-bold ${activeId === faq.id ? "text-cyan-500" : ""}`}>
+                    0{faq.id}
+                  </span>
+                  <span className="ml-6">{faq.title}</span>
+                </button>
+              ))}
+            </div>
+          </div>
 
-                <p className="pb-4 leading-relaxed text-gray-500">
-                  {faq.content}
-                </p>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </motion.div>
+          {/* Right Side: Dynamic Content */}
+          <div className="md:col-span-7 flex items-center">
+            <div className="p-10 bg-[#0a0a0a] border border-gray-900 w-full min-h-[300px] flex flex-col justify-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeId}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <p className="text-cyan-500 font-mono mb-4 text-sm">/ {faqs.find(f => f.id === activeId)?.title}</p>
+                  <h3 className="text-3xl font-bold text-white mb-6">
+                    {faqs.find(f => f.id === activeId)?.content}
+                  </h3>
+                  <div className="h-1 w-20 bg-cyan-500" />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
 
+        </div>
       </div>
     </section>
   );

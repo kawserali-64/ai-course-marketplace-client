@@ -75,93 +75,99 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
-        <h1 className="mb-2 text-center text-3xl font-bold">
-          Welcome Back
-        </h1>
+    <div className="flex min-h-screen items-center justify-center bg-[#050505] px-4 py-12">
+      <div className="w-full max-w-[400px] rounded-3xl border border-gray-800 bg-[#0a0a0a] p-8 shadow-2xl">
+        <div className="mb-8 text-center">
+          <h1 className="text-2xl font-black tracking-tight text-white">
+            Welcome back
+          </h1>
+          <p className="mt-2 text-sm text-gray-400">
+            Please enter your details to sign in.
+          </p>
+        </div>
 
-        <p className="mb-6 text-center text-sm text-gray-500">
-          Sign in to your account
-        </p>
-
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="flex flex-col gap-1">
-            <Label htmlFor="email">Email</Label>
-
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs font-bold uppercase tracking-widest text-cyan-500" htmlFor="email">Email</Label>
             <Input
               id="email"
               name="email"
               type="email"
-              placeholder="Enter your email"
+              placeholder="name@example.com"
+              className="h-11 rounded-xl bg-[#050505] border-gray-800 focus:border-cyan-500"
             />
           </div>
 
-          <div className="flex flex-col gap-1">
-            <Label htmlFor="password">Password</Label>
-
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs font-bold uppercase tracking-widest text-cyan-500" htmlFor="password">Password</Label>
             <div className="relative">
               <Input
                 id="password"
                 name="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                className="w-full pr-10"
+                placeholder="••••••••"
+                className="h-11 rounded-xl w-full bg-[#050505] border-gray-800 focus:border-cyan-500"
               />
-
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-cyan-400"
               >
-                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                {showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
               </button>
             </div>
           </div>
 
           <Button
             type="submit"
-            className="w-full bg-cyan-600 text-white"
-            // isLoading={loading}
+            className="h-11 w-full rounded-xl bg-cyan-600 font-bold text-white hover:bg-cyan-500 transition-all"
           >
-            Sign In
+            Sign in
           </Button>
 
+          <div className="relative py-2">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-800"></div>
+            </div>
+            <div className="relative flex justify-center text-[10px] uppercase tracking-widest text-gray-500">
+              <span className="bg-[#0a0a0a] px-2">Or continue with</span>
+            </div>
+          </div>
+          
           <Button
             type="button"
-            // isLoading={demoLoading}
             onPress={handleDemoLogin}
-            className="w-full h-12 rounded-xl bg-white border-2 border-cyan-600 text-cyan-700 font-semibold hover:bg-cyan-600 hover:text-white hover:shadow-xl hover:shadow-cyan-200 transition-all duration-300 flex items-center justify-center gap-2"
+            className="h-11 w-full rounded-xl border border-gray-800 bg-[#111] text-gray-300 hover:bg-[#1a1a1a]"
           >
-            {!demoLoading && <FaUserShield size={18} />}
-            Demo Login
+            <FaUserShield size={16} className="text-cyan-400" />
+            Demo
           </Button>
-
+          
           <Button
             type="button"
             onPress={handleGoogleLogin}
-            className="w-full h-12 rounded-xl border-2 border-gray-300 bg-white text-gray-700 font-semibold hover:border-cyan-600 hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-3"
+            className="h-11 w-full rounded-xl border border-gray-800 bg-[#111] text-gray-300 hover:bg-[#1a1a1a]"
           >
-            <FcGoogle size={22} />
-            Continue with Google
+            <FcGoogle size={18} />
+            Google
           </Button>
         </form>
 
-        <div className="mt-6 rounded-xl border bg-gray-50 p-4 text-sm">
-          <p className="mb-2 font-semibold">Demo Credentials</p>
+        <div className="mt-8 rounded-xl border border-gray-800 bg-[#050505] p-4 text-[11px] text-gray-500">
+          <p className="mb-2 font-bold text-gray-300">Demo Credentials</p>
           <p>Email: demo@houserental.com</p>
           <p>Password: Demo12345</p>
         </div>
 
-        <div className="mt-6 text-center text-sm">
+        <p className="mt-6 text-center text-xs text-gray-500">
           Don't have an account?{" "}
           <Link
             href="/signup"
-            className="font-semibold text-primary hover:underline"
+            className="font-bold text-cyan-400 hover:underline"
           >
-            Sign Up
+            Sign up
           </Link>
-        </div>
+        </p>
       </div>
     </div>
   );
