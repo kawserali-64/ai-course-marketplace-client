@@ -8,7 +8,7 @@ The platform allows users to explore AI courses, publish their own courses, gene
 
 ## 🌐 Live Website
 
-🔗 https://your-live-site.vercel.app
+🔗 https://ai-course-marketplace-client.vercel.app
 
 ---
 

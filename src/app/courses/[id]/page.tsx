@@ -6,7 +6,6 @@ import {
   FaUserGraduate,
   FaChalkboardTeacher,
   FaArrowLeft,
-  FaInfoCircle,
   FaCheckCircle,
 } from "react-icons/fa";
 
@@ -34,185 +33,104 @@ interface RelatedCourse {
   rating: number;
 }
 
-// Fetch Course
 async function getCourse(id: string): Promise<Course | null> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/courses/${id}`,
-      {
-        cache: "no-store",
-      }
-    );
-
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/courses/${id}`, { cache: "no-store" });
     if (!res.ok) return null;
-
     return res.json();
   } catch (error) {
     return null;
   }
 }
 
-// Fetch Related Courses
 async function getRelatedCourses(id: string): Promise<RelatedCourse[]> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/courses/${id}/related`,
-      {
-        cache: "no-store",
-      }
-    );
-
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/courses/${id}/related`, { cache: "no-store" });
     if (!res.ok) return [];
-
     const data = await res.json();
-
     return data.courses || [];
   } catch (error) {
     return [];
   }
 }
 
-export default async function CourseDetailsPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function CourseDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-
   const course = await getCourse(id);
-
-  if (!course) {
-    return notFound();
-  }
-
+  if (!course) return notFound();
+  
   const relatedCourses = await getRelatedCourses(id);
 
-  const features = [
-    "Lifetime Access",
-    "Industry Level Projects",
-    "Certificate Included",
-    "Expert Instructor Support",
-  ];
-
   return (
-    <section className="min-h-screen bg-[#050505] py-10 md:py-16 text-white">
-      <div className="mx-auto w-full max-w-6xl px-4">
-        {/* Back Button */}
-        <Link
-          href="/courses"
-          className="mb-8 inline-flex items-center gap-2 font-semibold text-cyan-500 hover:underline"
-        >
-          <FaArrowLeft />
-          Back To Courses
+    <section className="min-h-screen bg-[#050505] py-16 text-white selection:bg-cyan-500/30">
+      <div className="mx-auto w-full max-w-7xl px-4">
+        {/* Navigation */}
+        <Link href="/courses" className="mb-10 inline-flex items-center gap-2 text-sm font-mono text-gray-500 hover:text-cyan-500 transition-colors">
+          <FaArrowLeft />  BACK_TO_CATALOG
         </Link>
 
-        {/* Header */}
-        <div className="mb-10">
-          <span className="rounded-lg bg-cyan-500/10 px-4 py-1 text-sm font-bold uppercase tracking-wide text-cyan-500 border border-cyan-500/20">
-            {course.category}
-          </span>
-
-          <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-white md:text-6xl">
-            {course.title}
-          </h1>
-
-          <div className="mt-5 flex flex-wrap gap-6 text-gray-400">
-            <span className="flex items-center gap-2">
-              <FaChalkboardTeacher className="text-cyan-500" />
-              {course.instructor}
-            </span>
-
-            <span className="flex items-center gap-2">
-              <FaStar className="text-amber-400" />
-              {course.rating}
-            </span>
-
-            <span className="flex items-center gap-2">
-              <FaUserGraduate className="text-cyan-500" />
-              {course.students} Students
-            </span>
-          </div>
-        </div>
-
-        {/* Hero Image */}
-        <div className="relative mb-12 h-[350px] overflow-hidden rounded-[2rem] shadow-2xl border border-gray-900 md:h-[600px]">
-          <Image
-            src={course.image}
-            alt={course.title}
-            fill
-            priority
-            className="object-cover"
-          />
-        </div>
-
-        <div className="grid gap-10 lg:grid-cols-3">
-          {/* Left */}
-          <div className="space-y-8 lg:col-span-2">
-            {/* Overview */}
-            <div className="rounded-[2rem] border border-gray-900 bg-[#0a0a0a] p-8 shadow-sm">
-              <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-white">
-                <FaInfoCircle className="text-cyan-500" />
-                Course Overview
-              </h2>
-
-              <p className="text-lg leading-relaxed text-gray-400">
-                {course.description}
+        {/* Hero Section */}
+        <div className="relative mb-20">
+          <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none" />
+          
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-block border border-cyan-500/30 bg-cyan-500/5 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-cyan-500 mb-6">
+                {course.category}
+              </div>
+              <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.95] mb-8 italic">
+                {course.title}
+              </h1>
+              <p className="text-xl text-gray-400 mb-10 leading-relaxed max-w-lg">
+                {course.shortDescription}
               </p>
-            </div>
-
-            {/* Info Cards */}
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-              <div className="rounded-2xl border border-gray-900 bg-[#0a0a0a] p-6 text-center shadow-sm">
-                <FaStar className="mx-auto mb-3 text-2xl text-amber-400" />
-                <h3 className="text-xl font-bold text-white">{course.rating}</h3>
-                <p className="text-xs font-bold uppercase text-gray-500">Rating</p>
-              </div>
-
-              <div className="rounded-2xl border border-gray-900 bg-[#0a0a0a] p-6 text-center shadow-sm">
-                <FaUserGraduate className="mx-auto mb-3 text-2xl text-cyan-500" />
-                <h3 className="text-xl font-bold text-white">{course.students}</h3>
-                <p className="text-xs font-bold uppercase text-gray-500">Students</p>
-              </div>
-
-              <div className="rounded-2xl border border-gray-900 bg-[#0a0a0a] p-6 text-center shadow-sm">
-                <FaChalkboardTeacher className="mx-auto mb-3 text-2xl text-cyan-500" />
-                <h3 className="text-xl font-bold text-white">{course.level}</h3>
-                <p className="text-xs font-bold uppercase text-gray-500">Level</p>
-              </div>
-            </div>
-
-            {/* Features */}
-            <div className="rounded-[2rem] border border-gray-900 bg-[#0a0a0a] p-8 shadow-sm">
-              <h2 className="mb-6 text-2xl font-bold text-white">
-                Course Highlights
-              </h2>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {features.map((item) => (
-                  <div
-                    key={item}
-                    className="flex items-center gap-3 font-medium text-gray-300"
-                  >
-                    <FaCheckCircle className="text-cyan-500" />
-                    {item}
+              
+              <div className="flex gap-8 border-t border-gray-900 pt-8">
+                {[
+                  { icon: FaChalkboardTeacher, val: course.instructor, label: "Instructor" },
+                  { icon: FaStar, val: course.rating, label: "Rating" },
+                  { icon: FaUserGraduate, val: `${course.students}+`, label: "Students" },
+                ].map((item, i) => (
+                  <div key={i}>
+                    <div className="flex items-center gap-2 text-white font-bold mb-1">
+                      <item.icon className="text-cyan-500" /> {item.val}
+                    </div>
+                    <div className="text-[10px] uppercase tracking-widest text-gray-600">{item.label}</div>
                   </div>
                 ))}
               </div>
             </div>
+
+            <div className="relative h-[500px] border border-gray-900 p-2 bg-[#0a0a0a]">
+              <Image src={course.image} alt={course.title} fill className="object-cover" priority />
+              <div className="absolute inset-0 border border-white/10" />
+            </div>
+          </div>
+        </div>
+
+        {/* Content Grid */}
+        <div className="grid lg:grid-cols-3 gap-12">
+          <div className="lg:col-span-2 space-y-12">
+            <div className="border-l border-gray-900 pl-8">
+              <h3 className="text-3xl font-black tracking-tight mb-6 uppercase tracking-widest text-white">Course Architecture</h3>
+              <p className="text-gray-400 leading-relaxed text-lg">{course.description}</p>
+            </div>
           </div>
 
-          {/* Sidebar */}
-          <div>
-            <div className="sticky top-24 rounded-[2rem] border border-gray-900 bg-[#0a0a0a] p-8 shadow-xl">
-              <p className="text-gray-400">Course Price</p>
-              <h2 className="mb-8 mt-2 text-5xl font-extrabold text-white">
-                ${course.price}
-              </h2>
-
-              <div className="rounded-2xl bg-[#050505] p-6 text-center border border-gray-900">
-                <button className="w-full rounded-xl bg-cyan-600 py-4 font-bold text-white transition hover:bg-cyan-700">
-                  Enroll Now
-                </button>
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 border border-gray-900 bg-[#0a0a0a] p-8">
+              <div className="text-sm text-gray-500 mb-2 uppercase tracking-widest">Investment</div>
+              <div className="text-6xl font-black mb-8">${course.price}</div>
+              <button className="w-full bg-cyan-500 text-black font-black py-4 uppercase tracking-widest hover:bg-white transition-all">
+                ENROLL NOW
+              </button>
+              
+              <div className="mt-8 pt-8 border-t border-gray-900 space-y-4">
+                {["Lifetime Access", "Industry Projects", "Certificate Included"].map((f) => (
+                  <div key={f} className="flex items-center gap-3 text-sm text-gray-400 font-mono">
+                    <FaCheckCircle className="text-cyan-500" /> {f}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -220,42 +138,19 @@ export default async function CourseDetailsPage({
 
         {/* Related Courses */}
         {relatedCourses.length > 0 && (
-          <section className="mt-16">
-            <h2 className="mb-8 text-3xl font-extrabold text-white">
-              Related Courses
-            </h2>
-
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <section className="mt-24 pt-16 border-t border-gray-900">
+            <h2 className="mb-12 text-3xl font-black uppercase tracking-[0.2em] text-white">Related Modules</h2>
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               {relatedCourses.map((item) => (
-                <div
-                  key={item._id}
-                  className="overflow-hidden rounded-3xl border border-gray-900 bg-[#0a0a0a] shadow-md"
-                >
-                  <div className="relative h-52">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-cover"
-                    />
+                <div key={item._id} className="group border border-gray-900 bg-[#0a0a0a] p-1 transition-all hover:border-cyan-500/50">
+                  <div className="relative h-48 mb-4">
+                    <Image src={item.image} alt={item.title} fill className="object-cover" />
                   </div>
-
-                  <div className="p-5">
-                    <h3 className="text-xl font-bold text-white">{item.title}</h3>
-
-                    <p className="mt-2 line-clamp-2 text-sm text-gray-400">
-                      {item.shortDescription}
-                    </p>
-
-                    <p className="mt-4 text-lg font-bold text-cyan-500">
-                      ${item.price}
-                    </p>
-
-                    <Link
-                      href={`/courses/${item._id}`}
-                      className="mt-5 block rounded-xl bg-cyan-600 py-3 text-center font-bold text-white hover:bg-cyan-700"
-                    >
-                      View Details
+                  <div className="p-4">
+                    <h3 className="font-bold text-white mb-2 line-clamp-1">{item.title}</h3>
+                    <p className="text-xs text-gray-500 mb-4 line-clamp-2">{item.shortDescription}</p>
+                    <Link href={`/courses/${item._id}`} className="block w-full border border-gray-800 py-2 text-center text-xs font-bold uppercase tracking-widest text-white hover:bg-cyan-500 hover:text-black transition-all">
+                      Details
                     </Link>
                   </div>
                 </div>

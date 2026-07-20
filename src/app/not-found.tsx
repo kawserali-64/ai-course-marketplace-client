@@ -1,45 +1,52 @@
 import Link from "next/link";
-import { FaHome, FaSearch } from "react-icons/fa";
 
 export default function NotFound() {
   return (
-    <section className="min-h-[calc(100vh-80px)] flex items-center justify-center bg-base-100 px-6">
-      <div className="max-w-2xl text-center">
-        {/* Icon */}
-        <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-cyan-100">
-          <FaSearch className="text-5xl text-cyan-600" />
+    <section className="relative min-h-screen bg-[#050505] flex items-center justify-center overflow-hidden px-6">
+      {/* Cinematic Background Glow */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 blur-[150px] rounded-full" />
+      </div>
+
+      <div className="relative z-10 max-w-2xl text-center">
+        {/* Top Tag */}
+        <div className="inline-block border border-gray-800 bg-[#0a0a0a] px-6 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 mb-10 shadow-xl">
+          Error: 404 // Access Denied
         </div>
 
-        {/* 404 */}
-        <h1 className="text-7xl font-extrabold text-cyan-600">404</h1>
+        {/* 404 Big Title */}
+        <div className="relative">
+          <h1 className="text-[150px] md:text-[220px] font-black text-white italic tracking-tighter leading-[0.8] mb-6 select-none">
+            404
+          </h1>
+          <div className="absolute -top-4 -right-4 w-10 h-10 border-t-2 border-r-2 border-cyan-500"></div>
+          <div className="absolute -bottom-4 -left-4 w-10 h-10 border-b-2 border-l-2 border-cyan-500"></div>
+        </div>
 
-        {/* Title */}
-        <h2 className="mt-4 text-3xl font-bold text-base-content">
-          Oops! Page Not Found
+        {/* Subtitle */}
+        <h2 className="text-xl md:text-2xl font-black uppercase tracking-[0.3em] text-cyan-500 mb-8">
+          Navigation Failed
         </h2>
 
         {/* Description */}
-        <p className="mx-auto mt-4 max-w-lg text-base-content/70">
-          The page you are looking for doesn't exist or may have been moved.
-          Return to the homepage or continue exploring available rental
-          properties.
+        <p className="mx-auto max-w-md text-gray-500 font-mono text-sm leading-relaxed mb-12 border-l border-gray-900 pl-4">
+          THE SPECIFIED SECTOR DOES NOT EXIST. <br/>
+          PLEASE RECALIBRATE YOUR COORDINATES.
         </p>
 
-        {/* Buttons */}
-        <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        {/* Action Buttons */}
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
             href="/"
-            className="btn bg-cyan-600 text-white hover:bg-cyan-700 border-none"
+            className="w-full sm:w-auto px-12 py-4 bg-white text-black font-black uppercase tracking-widest hover:bg-cyan-500 transition-all duration-300"
           >
-            <FaHome className="mr-2" />
-            Back to Home
+            Go Home
           </Link>
-
           <Link
-            href="/houses"
-            className="btn btn-outline border-cyan-600 text-cyan-600 hover:bg-cyan-600 hover:text-white"
+            href="/courses"
+            className="w-full sm:w-auto px-12 py-4 bg-transparent border border-gray-800 text-white font-black uppercase tracking-widest hover:border-cyan-500 transition-all duration-300"
           >
-            Browse Houses
+            Explore Modules
           </Link>
         </div>
       </div>

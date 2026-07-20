@@ -15,19 +15,19 @@ import "swiper/css/navigation";
 
 const slides = [
   {
-    title: "Master AI Skills for the Future",
-    subtitle: "Learn ChatGPT, Prompt Engineering, Machine Learning, Generative AI and more from industry experts.",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2000&auto=format&fit=crop",
+    title: "MASTER AI SKILLS FOR THE FUTURE",
+    subtitle: "Precision-engineered learning paths for the future of artificial intelligence.",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2000&auto=format&fit=crop", // Abstract Tech / Neural Network
   },
   {
-    title: "Become an AI Professional",
+    title: "BECOME AN AI PROFESSIONAL",
     subtitle: "Build real-world AI projects and earn industry-recognized certificates.",
-    image: "https://images.unsplash.com/photo-1696258686454-60082b2c3c52?q=80&w=2000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2000&auto=format&fit=crop", // Data Visualization / Analytics
   },
   {
-    title: "Learn • Practice • Get Hired",
+    title: "LEARN • PRACTICE • GET HIRED",
     subtitle: "Start your AI journey today with premium courses and hands-on learning.",
-    image: "https://images.unsplash.com/photo-1655635922054-65089f417534?q=80&w=2000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1535378917042-10a22c95931a?q=80&w=2000&auto=format&fit=crop", // Clean Modern Workspace / Coding
   },
 ];
 

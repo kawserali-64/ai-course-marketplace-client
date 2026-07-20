@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { FaBars, FaGraduationCap } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -28,11 +29,10 @@ export default function Navbar() {
     <Link
       href={href}
       onClick={() => setOpen(false)}
-      className={`px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full ${
-        pathname === href
+      className={`px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full ${pathname === href
           ? "text-cyan-400 bg-cyan-950/30"
           : "text-gray-400 hover:text-cyan-400 hover:bg-gray-800/50"
-      }`}
+        }`}
     >
       {label}
     </Link>
@@ -45,9 +45,7 @@ export default function Navbar() {
           <div className="flex items-center justify-center rounded-lg bg-cyan-600 p-2 text-white">
             <FaGraduationCap size={20} />
           </div>
-          <span className="text-white font-bold">
-            AI Course
-          </span>
+          <span className="text-white font-bold">AI Course</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -90,41 +88,61 @@ export default function Navbar() {
         </button>
       </div>
 
-      {open && (
-        <div className="absolute top-16 w-full border-b border-gray-800 bg-[#0a0a0a]/95 backdrop-blur-xl p-5 shadow-2xl md:hidden">
-          <nav className="flex flex-col gap-3">
-            {navLink("/", "Home")}
-            {navLink("/courses", "Courses")}
-            {navLink("/about", "About")}
-            {navLink("/contact", "Contact")}
-            {user && !isPending && (
-              <>
-                {navLink("/courses/add", "Add Course")}
-                {navLink("/courses/my-courses", "My Courses")}
-                {navLink("/courses/ai-recommendation", "AI Recommendation")}
-                {navLink("/dashboard", "Dashboard")}
-                {navLink("/profile", "Profile")}
-              </>
-            )}
-            <div className="mt-4 border-t border-gray-800 pt-4">
-              {!user ? (
-                <div className="flex flex-col gap-3">
-                  <Link href="/signin" className="w-full rounded-full py-3 text-center font-semibold text-gray-400">Sign In</Link>
-                  <Link href="/signup" className="w-full rounded-full bg-cyan-600 py-3 text-center font-semibold text-white">Sign Up</Link>
+      <AnimatePresence>
+        {open && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setOpen(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 h-full w-[280px] bg-[#0a0a0a] border-l border-gray-800 z-50 p-6 shadow-2xl md:hidden"
+            >
+              <div className="flex justify-end mb-6">
+                <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-white text-xl">✕</button>
+              </div>
+              <nav className="flex flex-col gap-4">
+                {navLink("/", "Home")}
+                {navLink("/courses", "Courses")}
+                {navLink("/about", "About")}
+                {navLink("/contact", "Contact")}
+                {user && !isPending && (
+                  <>
+                    {navLink("/courses/add", "Add Course")}
+                    {navLink("/courses/my-courses", "My Courses")}
+                    {navLink("/courses/ai-recommendation", "AI Recommendation")}
+                    {navLink("/courses/dashboard", "Dashboard")}
+                    {navLink("/courses/profile", "Profile")}
+                  </>
+                )}
+                <div className="mt-6 border-t border-gray-800 pt-6">
+                  {!user ? (
+                    <div className="flex flex-col gap-3">
+                      <Link href="/signin" onClick={() => setOpen(false)} className="w-full py-3 text-center font-semibold text-gray-400">Sign In</Link>
+                      <Link href="/signup" onClick={() => setOpen(false)} className="w-full rounded-full bg-cyan-600 py-3 text-center font-semibold text-white">Sign Up</Link>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-4">
+                      <Link href="/profile" onClick={() => setOpen(false)} className="flex items-center gap-3">
+                        <Image src={user.image || "/avatar.png"} alt="User" width={40} height={40} className="h-10 w-10 rounded-full" />
+                        <span className="font-semibold text-white">{user.name}</span>
+                      </Link>
+                      <button onClick={handleLogout} className="w-full rounded-full border border-red-900/50 py-3 text-red-400 hover:bg-red-950/30 font-semibold">Logout</button>
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div className="flex flex-col gap-4">
-                  <Link href="/profile" className="flex items-center gap-3">
-                    <Image src={user.image || "/avatar.png"} alt="User" width={40} height={40} className="h-10 w-10 rounded-full" />
-                    <span className="font-semibold text-white">{user.name}</span>
-                  </Link>
-                  <button onClick={handleLogout} className="w-full rounded-full border border-red-900/50 py-3 text-red-400 hover:bg-red-950/30 font-semibold">Logout</button>
-                </div>
-              )}
-            </div>
-          </nav>
-        </div>
-      )}
+              </nav>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
